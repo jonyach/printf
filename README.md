@@ -1,8 +1,8 @@
 ### Working on 0x11. C - printf project (group project)
 
+Hello, welcome to our first group project, we are making a replica of the printf() fucntion from the C Standard Library.
 
-
-Hello, welcome to our first group project, we're replicating the printf() fucntion from the C Standard Library.
+This is a first collaborative project of perisamondi and jonyach
 
 ## Introduction to the project
 
