@@ -1,3 +1,4 @@
+#include "main.h"
 /**
  * print_int - Print int
  * @types: Lista of arguments
@@ -9,7 +10,7 @@
  * Return: Number of chars printed
  */
 int print_int(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
+int  flags, int width, int precision, int size)
 {
 	int i = BUFF_SIZE - 2;
 	int is_negative = 0;
