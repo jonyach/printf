@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-#define BUFF_SIZE 1024
 /**
  * struct flags - struct containing flags to "turn on"
  * when a flag specifier is passed to _printf()
