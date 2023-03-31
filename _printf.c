@@ -12,52 +12,38 @@
  */
 int _printf(const char *format, ...)
 {
-	int i, chars_printed, total_printed_chars;
-	int flags, width, precision, size, buff_ind;
-	va_list list;
-	char buffer[BUFF_SIZE];
+	int (*pfunc)(va_list, flags_t *);
+	const char *p;
+	va_list arguments;
+	flags_t flags = {0, 0, 0};
 
-	chars_printed = 0, total_printed_chars = 0, buff_ind = 0;
+	register int count = 0;
 
-	if (format == NULL)
-	{
+	va_start(arguments, format);
+	if (!format || (format[0] == '%' && !format[1]))
 		return (-1);
-	}
-
-	va_start(list, format);
-
-	for (i = 0; format && format[i] != '\0'; i++)
+	if (format[0] == '%' && format[1] == ' ' && !format[2])
+		return (-1);
+	for (p = format; *p; p++)
 	{
-		if (format[i] != '%')
+		if (*p == '%')
 		{
-			buffer[buff_ind++] = format[i];
-			if (buff_ind == BUFF_SIZE)
+			p++;
+			if (*p == '%')
 			{
-				print_buffer(buffer, &buff_ind);
+				count += _putchar('%');
+				continue;
 			}
-			total_printed_chars++;
-		}
-		else
-		{
-			print_buffer(buffer, &buff_ind);
-			flags = get_flags(format, &i);
-			width = get_width(format, &i, list);
-			precision = get_precision(format, &i, list);
-			size = get_size(format, &i);
-			++i;
-			chars_printed = handle_print(format, &i, list, buffer,
-				flags, width, precision, size);
-			if (chars_printed == -1)
-			{
-				return (-1);
-			}
-			total_printed_chars += chars_printed;
-		}
+			while (get_flag(*p, &flags))
+				p++;
+			pfunc = get_print(*p);
+			count += (pfunc)
+				? pfunc(arguments, &flags)
+			: _printf("%%%c", *p);
+		} else
+			count += _putchar(*p);
 	}
-
-	print_buffer(buffer, &buff_ind);
-
-	va_end(list);
-	return (total_printed_chars);
-
+	_putchar(-1);
+	va_end(arguments);
+	return ((count)i);
 }
